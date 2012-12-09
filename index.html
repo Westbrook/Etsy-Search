@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Etsy Search</title>
+</head>
+<body>
+<div id="app"></div>
+
+<script id="app-template" type="text/x-handlebars-template">
+	<div id="search"> 
+		<form>
+			<input class="search-term" type="search" />
+			<button class="search" title="search">Search</button>
+		</form>
+		<div id="categories"></div>
+	</div>
+	<ul id="results"></ul>
+	<ul id="product"></ul>
+</script>
+
+<script id="result-template" type="text/x-handlebars-template">
+	{{{title}}}
+	<button class="more">Learn More</button>
+</script>
+
+<script id="product-template" type="text/x-handlebars-template">
+	{{{description}}}
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/jquery-1.8.2.min.js"><\/script>')</script>
+<script src="js/underscore-min.js"></script>
+<script src="js/backbone-min.js"></script>
+<script src="js/handlebars-min.js"></script>
+<script src="js/etsy.js"></script>
+<script>
+$(function() {
+	app.es = new app.view.EtsySearch();
+});
+</script>
+</body>
+</html>
