@@ -14,10 +14,15 @@
 			<input class="search-term" type="search" />
 			<button class="search" title="search">Search</button>
 		</form>
-		<div id="categories"></div>
+		<div id="categories" hidden></div>
 	</div>
 	<div id="results"></div>
 	<div id="product"></div>
+</script>
+
+<script id="category-template" type="text/x-handlebars-template">
+	{{long_name}}
+	<div class="sub-categories"></div>
 </script>
 
 <script id="result-template" type="text/x-handlebars-template">
@@ -32,6 +37,7 @@
 
 
 <script id="product-template" type="text/x-handlebars-template">
+	<h1>{{{title}}}</h1>
 	<div class="image"></div>
 	<p>{{{description}}}</p>
 </script>
