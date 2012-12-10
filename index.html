@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Etsy Search</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Etsy Search</title>
+    <link rel="stylesheet" href="css/etsy.css">
 </head>
 <body>
 <div id="app"></div>
@@ -15,17 +16,28 @@
 		</form>
 		<div id="categories"></div>
 	</div>
-	<ul id="results"></ul>
-	<ul id="product"></ul>
+	<div id="results"></div>
+	<div id="product"></div>
 </script>
 
 <script id="result-template" type="text/x-handlebars-template">
+	<div class="image"></div>
 	{{{title}}}
 	<button class="more">Learn More</button>
 </script>
 
+<script id="result-image-template" type="text/x-handlebars-template">
+	<img src="{{url_75x75}}" />
+</script>
+
+
 <script id="product-template" type="text/x-handlebars-template">
-	{{{description}}}
+	<div class="image"></div>
+	<p>{{{description}}}</p>
+</script>
+
+<script id="product-image-template" type="text/x-handlebars-template">
+	<img src="{{url_570xN}}" />
 </script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>

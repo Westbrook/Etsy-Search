@@ -1,0 +1,62 @@
+* {		
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+#app {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;	
+}
+
+#search, #results, #product {
+	padding: 20px;
+}
+
+#search, #results {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 15%;
+	height: 100%;	
+}
+
+#search input, #search form {
+	width: 100%;
+	float: left;
+}
+
+#search button {
+	margin: 5px 0 0;
+	float: right;
+}
+
+#results {
+	width: 25%;
+	left: 15%;
+	margin: 0;
+	overflow-y: scroll;
+}
+
+#results .result {
+	float: left;
+	position: relative;
+	width: 100%;
+	padding: 0 100px 20px 0;
+}
+
+#results .more {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+#product {
+	position: absolute;
+	right: 0;
+	width: 60%;
+	height: 100%;	
+}
