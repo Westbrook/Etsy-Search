@@ -20,8 +20,12 @@
 	<div id="product"></div>
 </script>
 
+<script id="categories-template" type="text/x-handlebars-template">
+	<h2>Filter by Category</h2>
+</script>
+
 <script id="category-template" type="text/x-handlebars-template">
-	{{long_name}}
+	<button class="add-category{{#if selected}} selected{{/if}}">{{long_name}}<span>X</span></button>
 	<div class="sub-categories"></div>
 </script>
 

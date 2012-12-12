@@ -12,11 +12,11 @@
 	height: 100%;	
 }
 
-#search, #results, #product {
+#search, #results, #product, #categories {
 	padding: 20px;
 }
 
-#search, #results {
+#search, #results, #categories {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -60,4 +60,37 @@
 	width: 60%;
 	height: 100%;	
 	overflow-y: scroll;
+}
+
+#categories {
+	width: 100%;
+	padding-top: 75px;
+}
+
+#categories h2 {
+	margin: 0;
+	padding: 0 0 10px;
+}
+
+.category button {
+	float: left;
+	width: 100%;
+	background: none;
+	border: none;
+	text-align: left;
+	cursor: pointer;	
+}
+
+.category button span {
+	display: none;
+}
+
+.category .selected {
+	background: #cecece;
+}
+
+.category .selected span {
+	display: block;
+	color: #fff;
+	float: right;
 }

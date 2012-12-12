@@ -21,6 +21,9 @@ app.model.Listing = Backbone.Model.extend({
 app.model.Category = Backbone.Model.extend({
 	url: function() {
 		return 'http://openapi.etsy.com/v2/taxonomy/categories/'+this.tag+'?api_key='+app.api_key;
+	},
+	defaults: {
+		selected: false
 	}
 });
 app.collection.EtsySearch = Backbone.Collection.extend({
@@ -35,9 +38,10 @@ app.collection.EtsySearch = Backbone.Collection.extend({
 app.collection.Listings = app.collection.EtsySearch.extend({
 	model: app.model.Listing,
 	url: function() {
-		return 'http://openapi.etsy.com/v2/listings/active.js?api_key='+app.api_key+'&limit='+this.limit+'&keywords='+this.searchTerm;	
+		return 'http://openapi.etsy.com/v2/listings/active.js?api_key='+app.api_key+'&limit='+this.limit+'&keywords='+this.searchTerm + '&category=' + this.categories.join(' ');	
 	},
-	limit: 10
+	limit: 10,
+	categories: []
 });
 app.collection.ProductImages = app.collection.EtsySearch.extend({
 	url: function() {
@@ -128,26 +132,34 @@ app.view.Results = Backbone.View.extend({
 });
 app.view.Category = Backbone.View.extend({
 	className: 'category',
+	events: {
+		'click .add-category': 'addCategory'
+	},
 	initialize: function() {
 		_.bindAll(this);
+		this.model.on('change:selected', this.render);
 		this.template = Handlebars.compile($('#category-template').html());
 	},
 	render: function() {
 		this.$el.html(this.template(this.model.attributes));
 		return this;	
+	},
+	addCategory: function() {
+		this.model.set('selected', !this.model.get('selected'));
 	}
 });
 app.view.Categories = Backbone.View.extend({
 	el: '#categories',
 	initialize: function() {
 		_.bindAll(this);
+		this.template = Handlebars.compile($('#categories-template').html());
 		this.collection = new app.collection.Categories();
-		this.collection.on('scoped', this.render);	
+		this.collection.on('scoped', this.render);
 		this.collection.fetch({dataType: "jsonp", success: this.collection.scope});
 		this.categories = {};
 	},
 	render: function() {
-		this.$el.empty();
+		this.$el.html(this.template());
     	this.collection.each(this.addOne);
 	},
 	addOne: function(category) {
@@ -171,17 +183,34 @@ app.view.EtsySearch = Backbone.View.extend({
 		});
 		this.results.on('viewProduct', this.viewProduct);
 		this.categories = new app.view.Categories();
+		this.categories.collection.on('change', this.updateCategories);
+		this.listings.on('scoped', this.showCategories);
 	},
 	render: function() {
 		this.$el.html(this.template());
 	},
+	getResults: function() {
+		this.listings.fetch({dataType: "jsonp", success: this.listings.scope});
+	},
+	showCategories: function() {
+		this.categories.$el.show();
+	},
 	searchListings: function(e) {
 		e.preventDefault();
 		this.listings.searchTerm = this.$el.find('.search-term').val();
-		this.listings.fetch({dataType: "jsonp", success: this.listings.scope});
-		this.categories.$el.show();
+		this.getResults();
 	},
 	viewProduct: function(model) {
 		this.product = new app.view.Product({model: model});
+	},
+	updateCategories: function() {
+		var categories = [];
+		this.categories.collection.each(function(category){
+			if(category.get('selected')) {
+				categories.push(category.get('category_name'));
+			}
+		});
+		this.listings.categories = categories;
+		this.getResults();
 	}
 });
