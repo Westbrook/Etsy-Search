@@ -30,24 +30,16 @@
 </script>
 
 <script id="result-template" type="text/x-handlebars-template">
-	<div class="image"></div>
+	<img src="{{Images.0.url_75x75}}" title="{{{title}}}" />
 	{{{title}}}
 	<button class="more">Learn More</button>
 </script>
 
-<script id="result-image-template" type="text/x-handlebars-template">
-	<img src="{{url_75x75}}" />
-</script>
-
-
 <script id="product-template" type="text/x-handlebars-template">
+	<button title="Close" class="close">X</button>
 	<h1>{{{title}}}</h1>
-	<div class="image"></div>
+	<img src="{{Images.0.url_570xN}}" title="{{{title}}}" />
 	<p>{{{description}}}</p>
-</script>
-
-<script id="product-image-template" type="text/x-handlebars-template">
-	<img src="{{url_570xN}}" />
 </script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>

@@ -38,52 +38,33 @@ app.collection.EtsySearch = Backbone.Collection.extend({
 app.collection.Listings = app.collection.EtsySearch.extend({
 	model: app.model.Listing,
 	url: function() {
-		return 'http://openapi.etsy.com/v2/listings/active.js?api_key='+app.api_key+'&limit='+this.limit+'&keywords='+this.searchTerm + '&category=' + this.categories.join(' ');	
+		return 'http://openapi.etsy.com/v2/listings/active.js?api_key='+app.api_key+'&limit='+this.limit+'&keywords='+this.searchTerm + '&includes=Images&category=' + this.categories.join(' ');	
 	},
 	limit: 10,
 	categories: []
-});
-app.collection.ProductImages = app.collection.EtsySearch.extend({
-	url: function() {
-		return 'http://openapi.etsy.com/v2/listings/'+this.id+'/images.js?api_key='+app.api_key+'';	
-	}
 });
 app.collection.Categories = app.collection.EtsySearch.extend({
 	url: function() {
 		return 'http://openapi.etsy.com/v2/taxonomy/categories.js?api_key='+app.api_key;
 	}
 });
-app.view.ProductImages = Backbone.View.extend({
-	initialize: function() {
-		_.bindAll(this);
-		this.collection = new app.collection.ProductImages();
-		this.collection.id = this.id;
-		this.collection.on('scoped',this.render);
-	},
-	currentImage: 0,
-	setTemplate: function(templateEl) {
-		this.template = Handlebars.compile($(templateEl).html());
-	},
-	render: function() {
-		if(this.collection.at(this.currentImage)){
-			this.$el.html(this.template(this.collection.at(this.currentImage).attributes));
-		}
-	}
-});
 app.view.Product = Backbone.View.extend({
 	el: '#product',
+	events: {
+		'click .close': 'unrender'
+	},
 	initialize: function() {
 		_.bindAll(this);
 		this.template = Handlebars.compile($('#product-template').html());
 		this.model.on('scoped', this.render);
 		this.render();
-		this.images = new app.view.ProductImages({id: this.model.get('listing_id')});
-		this.images.$el = this.$el.find('.image');
-		this.images.setTemplate('#product-image-template');
-		this.images.collection.fetch({dataType: "jsonp", success: this.images.collection.scope});
 	},
 	render: function() {
 		this.$el.html(this.template(this.model.attributes));
+	},
+	unrender: function() {
+		this.$el.empty();
+		this.unbind();	
 	}
 });
 app.view.Result = Backbone.View.extend({
@@ -94,12 +75,6 @@ app.view.Result = Backbone.View.extend({
 	initialize: function() {
 		_.bindAll(this);
 		this.template = Handlebars.compile($('#result-template').html());
-	},
-	setImages: function() {
-		this.images = new app.view.ProductImages({id: this.model.get('listing_id')});
-		this.images.$el = this.$el.find('.image');
-		this.images.setTemplate('#result-image-template');
-		this.images.collection.fetch({dataType: "jsonp", success: this.images.collection.scope});
 	},
 	render: function() {
 		this.$el.html(this.template(this.model.attributes));
@@ -124,7 +99,6 @@ app.view.Results = Backbone.View.extend({
 		result.on('viewProduct', this.viewProduct);
 		this.results[result.get('listing_id')] = new app.view.Result({model: result});
     	this.$el.append(this.results[result.get('listing_id')].render().el);
-		//this.results[result.get('listing_id')].setImages();			//Public requests are capped at 10r/s, making this untenable.  But, it would be much cooler.
 	},
 	viewProduct: function(model) {
 		this.trigger('viewProduct', model);

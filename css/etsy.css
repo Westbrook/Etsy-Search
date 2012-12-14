@@ -48,6 +48,11 @@
 	padding: 0 100px 20px 0;
 }
 
+#results img {
+	float: left;
+	margin: 0 10px 0 0;	
+}
+
 #results .more {
 	position: absolute;
 	top: 0;
@@ -60,6 +65,11 @@
 	width: 60%;
 	height: 100%;	
 	overflow-y: scroll;
+}
+
+#product .close {
+	float: right;
+	margin: 15px 15px 0 0;
 }
 
 #categories {
