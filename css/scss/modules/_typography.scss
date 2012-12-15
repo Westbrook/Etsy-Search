@@ -1,0 +1,169 @@
+.heading {
+	font-size: 28px;
+	color: #666666;
+	font-weight: bold;
+	padding: 15px 0;
+	margin: 0;
+	line-height: 1;
+	
+	.red {
+		color: red;
+	}
+}
+
+h1 {
+	@extend .heading;
+}
+
+h2 {
+	@extend .heading;
+	padding-top: 0;
+	font-size: 23px;
+}
+
+.overlay h2 {
+	clear: both;
+	font-size: 18px;
+	padding-top: 10px;
+}
+
+h3 {
+	margin: 0;
+	font-size: 14px;
+	color: #999999;
+	text-transform: uppercase;
+	font-weight: normal;
+}
+
+.error {
+	font-weight: bold;
+	color: red;
+}
+
+#loginDiv .error {
+	color: #666666;
+	border: 2px solid #00eefd;
+	background-image: url(../images/icon-fail.png);
+	background-position: right center;
+	background-repeat: no-repeat;
+}
+
+a {
+	color: $blue;
+}
+
+/* ==========================================================================
+   Colors from the DR Overview page. If these get used elsewhere,
+   they should be given more generic names.
+   ========================================================================== */
+@mixin activeDr {
+    color: #abd861;
+}
+
+@mixin pendingDr {
+    color: #e5cb1f;
+}
+
+@mixin pastDr {
+    color: #bebebe;
+}
+
+
+.what-is-this {
+	float: none !important;
+	background: #999999;
+    box-shadow: 0 1px 0 0 #666666 inset;
+    color: #FFFFFF !important;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: bold;
+    height: 15px;
+    line-height: 15px;
+    margin: 16px 0 0 5px;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 1px 1px 0 #666666;
+    width: 15px;
+    position: relative;
+    @include border-radius(50%);
+	@include background-clip(padding-box);
+	
+	.message {
+		display: none;
+		position: absolute;
+		z-index: 10;
+		left: -45px;
+		bottom: 90%;
+		text-align: left;
+		text-shadow: none;
+		width: 240px;
+		padding: 16px 24px 44px;
+		
+		a {
+			color: #fff;
+		}
+		.content {
+			background: $blue;
+		}
+		.t {
+			float: left;
+			background: url(../images/info-top.png) repeat-x;
+			margin-top: -16px;
+			padding-top: 16px;
+		}
+		.r {
+			float: left;
+			background: url(../images/info-right.png) repeat-y right top;
+			margin-right: -24px;
+			padding-right: 24px;
+		}
+		.b {
+			float: left;
+			background: url(../images/info-bottom.png) repeat-x bottom left;
+			margin-bottom: -44px;
+			padding-bottom: 44px;
+			margin-left: 50px;
+		}
+		.l {
+			float: left;
+			background: url(../images/info-left.png) repeat-y;
+			margin-left: -74px;
+			padding-left: 24px;
+		}
+		.tl, .tr, .bl, .br {
+			position: absolute;
+			background: url(../images/info-bubble.png);
+			width: 24px;
+			height: 16px;
+		}
+		.tl {
+			top: 0;
+			left: 0;
+		}
+		.tr {
+			top: 0;
+			right: 0;
+			background-position: right top;
+		}
+		.bl {
+			bottom: 0;
+			left: 0;
+			background-position: left bottom;
+			width: 74px;
+			height: 44px;
+		}
+		.br {
+			bottom: 0;
+			right: 0;
+			background-position: right bottom;
+			height: 44px;
+		}
+	}
+	&:hover {
+		background: $blue;
+		.message {
+			display: block;
+		}
+	}
+}

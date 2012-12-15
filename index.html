@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Etsy Search</title>
-    <link rel="stylesheet" href="css/etsy.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div id="app"></div>
@@ -14,17 +14,24 @@
 			<input class="search-term" type="search" />
 			<button class="search" title="search">Search</button>
 		</form>
-		<div id="categories" hidden></div>
+		<div id="filters" hidden></div>
 	</div>
 	<div id="results"></div>
 	<div id="product"></div>
 </script>
 
-<script id="categories-template" type="text/x-handlebars-template">
-	<h2>Filter by Category</h2>
+<script id="filters-template" type="text/x-handlebars-template">
+	<h2>Filter by</h2>
+	<div id="prices"></div>
+	<div id="colors"></div>
+	<div id="categories"></div>
 </script>
 
-<script id="category-template" type="text/x-handlebars-template">
+<script id="filterType-template" type="text/x-handlebars-template">
+	<h3>{{filterType}}<span></span></h3>
+</script>
+
+<script id="filter-template" type="text/x-handlebars-template">
 	<button class="add-category{{#if selected}} selected{{/if}}">{{long_name}}<span>X</span></button>
 	<div class="sub-categories"></div>
 </script>
@@ -33,6 +40,7 @@
 	<img src="{{Images.0.url_75x75}}" title="{{{title}}}" />
 	{{{title}}}
 	<button class="more">Learn More</button>
+	<div class="price">{{price}} {{currency_code}}</div>
 </script>
 
 <script id="product-template" type="text/x-handlebars-template">
