@@ -10,6 +10,7 @@
 
 <script id="app-template" type="text/x-handlebars-template">
 	<div id="search"> 
+		<h1>What can I help you find today?</h1>
 		<form>
 			<input class="search-term" type="search" />
 			<button class="search" title="search">Search</button>
@@ -36,8 +37,18 @@
 	<div class="sub-categories"></div>
 </script>
 
+<script id="results-template" type="text/x-handlebars-template">
+	<div class="controls"></div>
+	<div class="results"></div>
+	<div class="controls"></div>
+</script>
+
+<script id="controls-template" type="text/x-handlebars-tempalte">
+	{{pagination}}
+</script>
+
 <script id="result-template" type="text/x-handlebars-template">
-	<img src="{{Images.0.url_75x75}}" title="{{{title}}}" />
+	<img src="{{Images.0.url_75x75}}" title="{{{title}}}" width="75" height="75" />
 	{{{title}}}
 	<button class="more">Learn More</button>
 	<div class="price">{{price}} {{currency_code}}</div>
@@ -46,7 +57,7 @@
 <script id="product-template" type="text/x-handlebars-template">
 	<button title="Close" class="close">X</button>
 	<h1>{{{title}}}</h1>
-	<img src="{{Images.0.url_570xN}}" title="{{{title}}}" />
+	<img src="{{Images.0.url_570xN}}" title="{{{title}}}" width="570" />
 	<p>{{{description}}}</p>
 </script>
 

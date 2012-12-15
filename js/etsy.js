@@ -5,12 +5,34 @@ window.app = {
 	api_key: 'CMCCX1OZDKGQ4M1LA2GLLSJL',
 	baseURL: 'http://openapi.etsy.com/v2/'
 };
+Handlebars.registerHelper('pagination', function() {
+	var pagination = '',
+		maxPage;
+	if(this.count>this.limit) {
+		pagination += '<span>Pages: </span>';
+		for(var i = this.page-2, max = this.page+2; i <= max; i++){
+			if(i==this.page-2 && this.page>1){
+				pagination += '<a href="#" data-page="1" title="First Page"><<</a>';
+				pagination += '<a href="#" data-page="' + (this.page-1) + '" title="Previous Page"><</a>';	
+			}
+			if(i>0 && (this.count > (i - 1) * this.limit)){
+				pagination += '<a href="#" data-page="' + i + '" title="Page ' + i + '">' + i + '</a>';
+			}
+			if(i==this.page+2 && (this.count > this.page * this.limit)){
+				pagination += '<a href="#" data-page="' + (this.page+1) + '" title="Next Page">></a>';	
+				maxPage = (Math.ceil(this.count / this.limit));
+				pagination += '<a href="#" data-page="' + maxPage + '" title="Last Page">>></a>';
+			}
+		}
+	}
+	return new Handlebars.SafeString(pagination);
+});
 app.model.Listing = Backbone.Model.extend({
 	initialize: function() {
 		_.bindAll(this);
 	},
 	url: function() {
-		return 	'http://openapi.etsy.com/v2/listings/'+this.id+'.js?api_key='+app.api_key+'';	
+		return 	app.baseURL + '/listings/'+this.id+'.js?api_key='+app.api_key;	
 	},
 	scope: function() {
 		var newAttrs = this.get('results')[0];
@@ -21,7 +43,7 @@ app.model.Listing = Backbone.Model.extend({
 });
 app.model.Category = Backbone.Model.extend({
 	url: function() {
-		return 'http://openapi.etsy.com/v2/taxonomy/categories/'+this.tag+'?api_key='+app.api_key;
+		return app.baseURL + '/taxonomy/categories/'+this.tag+'?api_key='+app.api_key;
 	},
 	defaults: {
 		selected: false
@@ -32,7 +54,8 @@ app.collection.EtsySearch = Backbone.Collection.extend({
 		_.bindAll(this);
 	},
 	scope: function() {
-		this.reset(this.at(0).get('results'));
+		this.count = this.at(0).get('count');
+		this.reset(this.at(0).get('results'), {silent: true});
 		this.trigger('scoped');
 	}
 });
@@ -51,17 +74,20 @@ app.collection.Listings = app.collection.EtsySearch.extend({
 		url += ((this.color!='')?'&color='+this.color+'&color_accuracy=30':'');
 		url += ((this.priceMin!=-1)?'&min_price='+this.priceMin:'');
 		url += ((this.priceMax!=-1)?'&max_price='+this.priceMax:'');
+		url += ((this.offset!=0)?'&offset='+this.offset:'');
 		return url;	
 	},
+	count: 0,
 	limit: 10,
 	categories: [],
 	color: '',
 	priceMin: -1,
-	priceMax: -1
+	priceMax: -1,
+	offset: 0
 });
 app.collection.Categories = app.collection.EtsySearch.extend({
 	url: function() {
-		return 'http://openapi.etsy.com/v2/taxonomy/categories.js?api_key='+app.api_key;
+		return app.baseURL +'taxonomy/categories.js?api_key='+app.api_key;
 	}
 });
 app.view.Product = Backbone.View.extend({
@@ -81,6 +107,25 @@ app.view.Product = Backbone.View.extend({
 	unrender: function() {
 		this.$el.empty();
 		this.unbind();	
+	}
+});
+app.view.Controls = Backbone.View.extend({
+	events: {
+		'click a': 'goToPage'
+	},
+	initialize: function() {
+		_.bindAll(this);
+		this.template = Handlebars.compile($('#controls-template').html());
+		this.model = new Backbone.Model();
+	},
+	render: function() {
+		this.$el.html(this.template(this.model.attributes));
+		return this;	
+	},
+	goToPage: function(e) {
+		e.preventDefault();
+		console.log($(e.currentTarget).data('page'));
+		this.trigger('goToPage', ($(e.currentTarget).data('page')-1) * 10);
 	}
 });
 app.view.Result = Backbone.View.extend({
@@ -104,17 +149,28 @@ app.view.Results = Backbone.View.extend({
 	el: '#results',
 	initialize: function() {
 		_.bindAll(this);
+		this.template = Handlebars.compile($('#results-template').html());
+		this.controls = new app.view.Controls();
 		this.collection.on('scoped', this.render);	
 		this.results = {};
 	},
 	render: function() {
-		this.$el.empty();
+		this.$el.html(this.template());
     	this.collection.each(this.addResult);
+		this.updateControls();
+		this.$el.find('.controls').html(this.controls.render().el);
+	},
+	updateControls: function() {
+		this.controls.model.set({
+			count: this.collection.count,
+			page: (this.collection.offset / this.collection.limit) + 1,
+			limit: this.collection.limit
+		});
 	},
 	addResult: function(result) {
 		result.on('viewProduct', this.viewProduct);
 		this.results[result.get('listing_id')] = new app.view.Result({model: result});
-    	this.$el.append(this.results[result.get('listing_id')].render().el);
+    	this.$el.find('.results').append(this.results[result.get('listing_id')].render().el);
 	},
 	viewProduct: function(model) {
 		this.trigger('viewProduct', model);
@@ -232,6 +288,7 @@ app.view.EtsySearch = Backbone.View.extend({
 			collection: this.listings
 		});
 		this.results.on('viewProduct', this.viewProduct);
+		this.results.controls.on('goToPage', this.goToPage);
 		this.filters = new app.view.Filters();
 		this.filters.categories.collection.on('change', this.updateCategories);
 		this.filters.colors.collection.on('change', this.updateColors);
@@ -302,5 +359,9 @@ app.view.EtsySearch = Backbone.View.extend({
 			priceView.render();
 		});
 		this.getResults();
+	},
+	goToPage: function(offset) {
+		this.listings.offset = offset;
+		this.getResults();	
 	}
 });

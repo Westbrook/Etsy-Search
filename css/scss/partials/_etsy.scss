@@ -24,6 +24,10 @@
 		overflow-y: scroll;	
 	}
 	#search {
+		h1 {
+			margin: 0;
+			padding: 0 0 10px;
+		}
 		padding-right: 0;
 		form {
 			padding: 0 20px 0 0;
@@ -62,6 +66,29 @@
 			position: absolute;
 			top: 20px;
 			right: 0;
+		}
+		.controls {
+			div {
+				float: right;
+				padding: 10px 0 0;
+			}
+			div:first-child {
+				padding: 0 0 10px;
+			}
+			a {
+				color: #fff;
+				background: #999;
+				text-decoration: none;
+				margin: 0 0 0 5px;
+				padding: 5px;
+				line-height: 1;
+				float: left;
+			}
+			span {
+				float: left;
+				padding: 5px 0;
+				margin: 0 0 0 5px;
+			}
 		}
 	}
 	#product {
