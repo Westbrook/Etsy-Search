@@ -94,9 +94,9 @@ app.collection.Categories = app.collection.EtsySearch.extend({
 	}
 });
 app.view.Product = Backbone.View.extend({
-	el: '#product',
+	className: 'product',
 	events: {
-		'click .close': 'unrender'
+		'click .close': 'close'
 	},
 	initialize: function() {
 		_.bindAll(this);
@@ -106,10 +106,30 @@ app.view.Product = Backbone.View.extend({
 	},
 	render: function() {
 		this.$el.html(this.template(this.model.attributes));
+		return this;
 	},
-	unrender: function() {
+	close: function() {
+		this.model.destroy();	
+	}
+});
+app.view.Products = Backbone.View.extend({
+	el: '#products',
+	initialize: function() {
+		_.bindAll(this);
+		this.collection = new app.collection.EtsySearch();	
+		this.collection.comparator = function(product) {
+			return product.get('title');
+		};
+		this.collection.on('add remove', this.render);
+		this.products = {};
+	},
+	render: function() {
 		this.$el.empty();
-		this.unbind();	
+    	this.collection.each(this.addProduct);
+	},
+	addProduct: function(product) {
+		this.products[product.get('listing_id')] = new app.view.Product({model: product});
+    	this.$el.append(this.products[product.get('listing_id')].render().el);
 	}
 });
 app.view.Controls = Backbone.View.extend({
@@ -162,6 +182,9 @@ app.view.Results = Backbone.View.extend({
     	this.collection.each(this.addResult);
 		this.updateControls();
 		this.assign(this.controls, '.controls');
+		if(this.collection.length>0) {
+			this.$el.show();
+		}
 	},
 	updateControls: function() {
 		this.controls.model.set({
@@ -338,6 +361,7 @@ app.view.EtsySearch = Backbone.View.extend({
 		this.sorting = new app.view.Sorting();
 		this.sorting.collection.on('change', this.updateSorting);
 		this.listings.on('scoped', this.showOptions);
+		this.product = new app.view.Products();
 	},
 	render: function() {
 		this.$el.html(this.template());
@@ -355,7 +379,7 @@ app.view.EtsySearch = Backbone.View.extend({
 		this.getResults();
 	},
 	viewProduct: function(model) {
-		this.product = new app.view.Product({model: model});
+		this.product.collection.add(model);
 	},
 	updateSorting: function(sortType) {
 		var direction = sortType.get('direction'),

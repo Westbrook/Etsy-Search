@@ -18,8 +18,8 @@
 		<div id="sorting" hidden></div>
 		<div id="filters" hidden></div>
 	</div>
-	<div id="results"></div>
-	<div id="product"></div>
+	<div id="results" hidden></div>
+	<div id="products"></div>
 </script>
 
 <script id="sorting-template" type="text/x-handelbars-template">
@@ -68,6 +68,7 @@
 	<h1>{{{title}}}</h1>
 	<img src="{{Images.0.url_570xN}}" title="{{{title}}}" width="570" />
 	<p>{{{description}}}</p>
+	<p class="link"><a href="{{url}}" title="View on Etsy.com" target="_blank">View on Etsy.com</a></p>
 </script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
