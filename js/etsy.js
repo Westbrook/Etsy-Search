@@ -158,7 +158,7 @@ app.view.Results = Backbone.View.extend({
 		this.$el.html(this.template());
     	this.collection.each(this.addResult);
 		this.updateControls();
-		this.$el.find('.controls').html(this.controls.render().el);
+		this.assign(this.controls, '.controls');
 	},
 	updateControls: function() {
 		this.controls.model.set({
@@ -174,6 +174,9 @@ app.view.Results = Backbone.View.extend({
 	},
 	viewProduct: function(model) {
 		this.trigger('viewProduct', model);
+	},
+	assign : function (view, selector) {
+		view.setElement(this.$(selector)).render();
 	}
 });
 app.view.Filter = Backbone.View.extend({

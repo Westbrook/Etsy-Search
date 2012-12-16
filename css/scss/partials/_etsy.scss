@@ -24,10 +24,6 @@
 		overflow-y: scroll;	
 	}
 	#search {
-		h1 {
-			margin: 0;
-			padding: 0 0 10px;
-		}
 		padding-right: 0;
 		form {
 			padding: 0 20px 0 0;
@@ -68,11 +64,9 @@
 			right: 0;
 		}
 		.controls {
-			div {
-				float: right;
-				padding: 10px 0 0;
-			}
-			div:first-child {
+			float: right;
+			padding: 10px 0 0;
+			&:first-child {
 				padding: 0 0 10px;
 			}
 			a {
@@ -107,12 +101,7 @@
 			float: left;
 			padding: 5px 0;
 		}
-		h2 {
-			margin: 0;
-			padding: 0 0 10px;
-		}
 		h3 {
-			margin: 0;
 			cursor: pointer;
 			position: relative;
 			span {

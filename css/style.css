@@ -122,7 +122,7 @@ a:hover {
  * and Chrome.
  */
 /* line 127, scss/partials/_normalize.scss */
-h1 {
+h1, h2 {
   font-size: 2em;
   margin: 0.67em 0;
 }
@@ -621,6 +621,17 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+/* line 1, scss/modules/_typography.scss */
+h1, h2 {
+  margin: 0;
+  padding: 0 0 10px;
+}
+
+/* line 8, scss/modules/_typography.scss */
+h3 {
+  margin: 0;
+}
+
 /* line 1, scss/partials/_etsy.scss */
 * {
   -webkit-box-sizing: border-box;
@@ -656,67 +667,62 @@ textarea {
 #app #search {
   padding-right: 0;
 }
-/* line 27, scss/partials/_etsy.scss */
-#app #search h1 {
-  margin: 0;
-  padding: 0 0 10px;
-}
-/* line 32, scss/partials/_etsy.scss */
+/* line 28, scss/partials/_etsy.scss */
 #app #search form {
   padding: 0 20px 0 0;
   width: 100%;
   float: left;
 }
-/* line 36, scss/partials/_etsy.scss */
+/* line 32, scss/partials/_etsy.scss */
 #app #search form input {
   width: 100%;
   float: left;
 }
-/* line 41, scss/partials/_etsy.scss */
+/* line 37, scss/partials/_etsy.scss */
 #app #search button {
   margin: 5px 0 0;
   float: right;
 }
-/* line 46, scss/partials/_etsy.scss */
+/* line 42, scss/partials/_etsy.scss */
 #app #results {
   width: 25%;
   left: 15%;
   margin: 0;
 }
-/* line 50, scss/partials/_etsy.scss */
+/* line 46, scss/partials/_etsy.scss */
 #app #results .result {
   float: left;
   position: relative;
   width: 100%;
   padding: 0 100px 20px 0;
 }
-/* line 56, scss/partials/_etsy.scss */
+/* line 52, scss/partials/_etsy.scss */
 #app #results img {
   float: left;
   margin: 0 10px 0 0;
 }
-/* line 60, scss/partials/_etsy.scss */
+/* line 56, scss/partials/_etsy.scss */
 #app #results .more {
   position: absolute;
   top: 0;
   right: 0;
 }
-/* line 65, scss/partials/_etsy.scss */
+/* line 61, scss/partials/_etsy.scss */
 #app #results .price {
   position: absolute;
   top: 20px;
   right: 0;
 }
-/* line 71, scss/partials/_etsy.scss */
-#app #results .controls div {
+/* line 66, scss/partials/_etsy.scss */
+#app #results .controls {
   float: right;
   padding: 10px 0 0;
 }
-/* line 75, scss/partials/_etsy.scss */
-#app #results .controls div:first-child {
+/* line 69, scss/partials/_etsy.scss */
+#app #results .controls:first-child {
   padding: 0 0 10px;
 }
-/* line 78, scss/partials/_etsy.scss */
+/* line 72, scss/partials/_etsy.scss */
 #app #results .controls a {
   color: #fff;
   background: #999;
@@ -726,42 +732,36 @@ textarea {
   line-height: 1;
   float: left;
 }
-/* line 87, scss/partials/_etsy.scss */
+/* line 81, scss/partials/_etsy.scss */
 #app #results .controls span {
   float: left;
   padding: 5px 0;
   margin: 0 0 0 5px;
 }
-/* line 94, scss/partials/_etsy.scss */
+/* line 88, scss/partials/_etsy.scss */
 #app #product {
   position: absolute;
   right: 0;
   width: 60%;
   height: 100%;
 }
-/* line 99, scss/partials/_etsy.scss */
+/* line 93, scss/partials/_etsy.scss */
 #app #product .close {
   float: right;
   margin: 15px 15px 0 0;
 }
-/* line 105, scss/partials/_etsy.scss */
+/* line 99, scss/partials/_etsy.scss */
 #app #filters #categories, #app #filters #colors, #app #filters #prices {
   width: 100%;
   float: left;
   padding: 5px 0;
 }
-/* line 110, scss/partials/_etsy.scss */
-#app #filters h2 {
-  margin: 0;
-  padding: 0 0 10px;
-}
-/* line 114, scss/partials/_etsy.scss */
+/* line 104, scss/partials/_etsy.scss */
 #app #filters h3 {
-  margin: 0;
   cursor: pointer;
   position: relative;
 }
-/* line 118, scss/partials/_etsy.scss */
+/* line 107, scss/partials/_etsy.scss */
 #app #filters h3 span {
   position: absolute;
   right: 10px;
@@ -771,7 +771,7 @@ textarea {
   border-left: 0;
   border-right: 6px solid black;
 }
-/* line 127, scss/partials/_etsy.scss */
+/* line 116, scss/partials/_etsy.scss */
 #app #filters h3.show span {
   border: 6px solid transparent;
   borer-bottom: 0;
@@ -779,13 +779,13 @@ textarea {
   right: 7px;
   margin-top: -3px;
 }
-/* line 135, scss/partials/_etsy.scss */
+/* line 124, scss/partials/_etsy.scss */
 #app #filters .category {
   display: none;
   float: left;
   width: 100%;
 }
-/* line 140, scss/partials/_etsy.scss */
+/* line 129, scss/partials/_etsy.scss */
 #app #filters button {
   float: left;
   width: 100%;
@@ -798,15 +798,15 @@ textarea {
   line-height: 1.5;
   padding-top: 2px;
 }
-/* line 151, scss/partials/_etsy.scss */
+/* line 140, scss/partials/_etsy.scss */
 #app #filters button span {
   display: none;
 }
-/* line 155, scss/partials/_etsy.scss */
+/* line 144, scss/partials/_etsy.scss */
 #app #filters .selected {
   background: #cecece;
 }
-/* line 157, scss/partials/_etsy.scss */
+/* line 146, scss/partials/_etsy.scss */
 #app #filters .selected span {
   display: block;
   color: #fff;
