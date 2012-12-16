@@ -15,10 +15,19 @@
 			<input class="search-term" type="search" />
 			<button class="search" title="search">Search</button>
 		</form>
+		<div id="sorting" hidden></div>
 		<div id="filters" hidden></div>
 	</div>
 	<div id="results"></div>
 	<div id="product"></div>
+</script>
+
+<script id="sorting-template" type="text/x-handelbars-template">
+	<h2>Sort by</h2>
+</script>
+
+<script id="sort-template" type="text/x-handelbars-template">
+	<button class="sortBy {{direction}}">{{long_name}}<span></span></button>
 </script>
 
 <script id="filters-template" type="text/x-handlebars-template">
@@ -29,7 +38,7 @@
 </script>
 
 <script id="filterType-template" type="text/x-handlebars-template">
-	<h3>{{filterType}}<span></span></h3>
+	<h3 class="open-close">{{filterType}}<span></span></h3>
 </script>
 
 <script id="filter-template" type="text/x-handlebars-template">

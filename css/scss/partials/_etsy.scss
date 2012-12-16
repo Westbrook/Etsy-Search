@@ -95,13 +95,15 @@
 			margin: 15px 15px 0 0;
 		}
 	}
-	#filters {
+	#filters, #sorting {
+		float: left;
+		width: 100%;
 		#categories, #colors, #prices {
 			width: 100%;
 			float: left;
 			padding: 5px 0;
 		}
-		h3 {
+		.open-close {
 			cursor: pointer;
 			position: relative;
 			span {
@@ -114,14 +116,10 @@
 				border-right: 6px solid black;
 			}
 			&.show span {
-				border: 6px solid transparent;
-				borer-bottom: 0;
-				border-top: 6px solid black;
-				right: 7px;
-				margin-top: -3px;
+				@extend .down-arrow;
 			}
 		}
-		.category {
+		.filter, .sort {
 			display: none;
 			float: left;
 			width: 100%;
@@ -148,6 +146,30 @@
 				color: #fff;
 				float: right;
 			}
+		}
+	}
+	#sorting {
+		padding: 0 0 15px;
+		h2 {
+			padding: 0;
+		}
+		.sort {
+			display: block;
+		}
+		.sortBy {
+			position: relative;
+		}
+		button span {
+			position: absolute;
+			right: 10px;
+			display: block;
+			width: 0;
+		}
+		.up span {
+			@extend .up-arrow;
+		}
+		.down span {
+			@extend .down-arrow;
 		}
 	}
 }

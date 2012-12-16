@@ -75,6 +75,7 @@ app.collection.Listings = app.collection.EtsySearch.extend({
 		url += ((this.priceMin!=-1)?'&min_price='+this.priceMin:'');
 		url += ((this.priceMax!=-1)?'&max_price='+this.priceMax:'');
 		url += ((this.offset!=0)?'&offset='+this.offset:'');
+		url += ((this.sort_order!='')?'&sort_on='+this.sort_on+'&sort_order='+this.sort_order:'');
 		return url;	
 	},
 	count: 0,
@@ -83,7 +84,9 @@ app.collection.Listings = app.collection.EtsySearch.extend({
 	color: '',
 	priceMin: -1,
 	priceMax: -1,
-	offset: 0
+	offset: 0,
+	sort_on: '',
+	sort_order: ''
 });
 app.collection.Categories = app.collection.EtsySearch.extend({
 	url: function() {
@@ -180,7 +183,7 @@ app.view.Results = Backbone.View.extend({
 	}
 });
 app.view.Filter = Backbone.View.extend({
-	className: 'category',
+	className: 'filter',
 	events: {
 		'click .add-category': 'addCategory'
 	},
@@ -221,7 +224,7 @@ app.view.Categories = Backbone.View.extend({
 	},
 	showAll: function() {
 		this.$el.find('h3').toggleClass('show');
-		this.$el.find('.category').toggle();	
+		this.$el.find('.filter').toggle();	
 	}
 });
 app.view.Colors = app.view.Categories.extend({
@@ -229,7 +232,7 @@ app.view.Colors = app.view.Categories.extend({
 	initialize: function() {
 		_.bindAll(this);
 		this.template = Handlebars.compile($('#filterType-template').html());
-		this.collection = new app.collection.Categories([
+		this.collection = new Backbone.Collection([
 			{long_name: "White", hex: "FFFFFF", category_id: 0},
 			{long_name: "Red", hex: "FF0000", category_id: 1},
 			{long_name: "Orange", hex: "FF7700", category_id: 2},
@@ -249,7 +252,7 @@ app.view.Prices = app.view.Categories.extend({
 	initialize: function() {
 		_.bindAll(this);
 		this.template = Handlebars.compile($('#filterType-template').html());
-		this.collection = new app.collection.Categories([
+		this.collection = new Backbone.Collection([
 			{long_name: "Less than $10", hex: "FFFFFF", category_id: 0,priceMin:-1,priceMax:10},
 			{long_name: "$10 - $50", hex: "FF0000", category_id: 1,priceMin:10,priceMax:50},
 			{long_name: "$50 - $100", hex: "FF7700", category_id: 2,priceMin:50,priceMax:100},
@@ -276,6 +279,42 @@ app.view.Filters = Backbone.View.extend({
 		this.$el.html(this.template());	
 	},
 });
+app.view.SortBy = Backbone.View.extend({
+	className: 'sort',
+	events: {
+		'click .sortBy': 'sortBy'
+	},
+	initialize: function() {
+		_.bindAll(this);
+		this.model.on('sorted', this.render);
+		this.template = Handlebars.compile($('#sort-template').html());
+	},
+	render: function() {
+		this.$el.html(this.template(this.model.attributes));
+		return this;	
+	},
+	sortBy: function() {
+		this.model.set('selected', !this.model.get('selected'));
+	}
+});
+app.view.Sorting = app.view.Categories.extend({
+	el: '#sorting',
+	initialize: function() {
+		_.bindAll(this);
+		this.template = Handlebars.compile($('#sorting-template').html());
+		this.collection = new Backbone.Collection([
+			{long_name: "Relevance", sortType: "score", direction: '', category_id: 0},
+			{long_name: "Price", sortType: "price", direction: '', category_id: 1}
+		]);
+		this.sortBys = {};
+		this.render();
+	},
+	addOne: function(sortBy) {
+		this.sortBys[sortBy.get('category_id')] = new app.view.SortBy({model: sortBy});
+    	this.$el.append(this.sortBys[sortBy.get('category_id')].render().el);
+	},
+	filterType: 'Sort By'
+});
 app.view.EtsySearch = Backbone.View.extend({
 	el: '#app',
 	events: {
@@ -296,7 +335,9 @@ app.view.EtsySearch = Backbone.View.extend({
 		this.filters.categories.collection.on('change', this.updateCategories);
 		this.filters.colors.collection.on('change', this.updateColors);
 		this.filters.prices.collection.on('change', this.updatePrices);
-		this.listings.on('scoped', this.showCategories);
+		this.sorting = new app.view.Sorting();
+		this.sorting.collection.on('change', this.updateSorting);
+		this.listings.on('scoped', this.showOptions);
 	},
 	render: function() {
 		this.$el.html(this.template());
@@ -304,7 +345,8 @@ app.view.EtsySearch = Backbone.View.extend({
 	getResults: function() {
 		this.listings.fetch({dataType: "jsonp", success: this.listings.scope});
 	},
-	showCategories: function() {
+	showOptions: function() {
+		this.sorting.$el.show();
 		this.filters.$el.show();
 	},
 	searchListings: function(e) {
@@ -314,6 +356,37 @@ app.view.EtsySearch = Backbone.View.extend({
 	},
 	viewProduct: function(model) {
 		this.product = new app.view.Product({model: model});
+	},
+	updateSorting: function(sortType) {
+		var direction = sortType.get('direction'),
+			newDirection;
+		_.each(this.sorting.collection.models, function(oldSortType) {
+			oldSortType.set({direction: ''},{silent: true});
+		});
+		if(sortType.get('sortType')=="score"){
+			newDirection = ((direction=='')?'down':'');
+		} else {
+			switch (direction) {
+				case 'down':
+					newDirection = "";
+					break;
+				case 'up':
+					newDirection = "down";
+					break;
+				default:
+					newDirection = "up";
+					break;
+			}
+		}
+		sortType.set({'direction':newDirection},{silent:true});
+		sortType.trigger('sorted');
+		this.listings.sort_order = sortType.get('direction');
+		if(this.listings.sort_orger == '') {			
+			this.listings.sort_on = '';
+		} else {
+			this.listings.sort_on = sortType.get('sortType');
+		}
+		this.getResults();
 	},
 	updateCategories: function() {
 		var categories = [];
