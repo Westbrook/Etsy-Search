@@ -13,12 +13,13 @@ TODOs:
 Loading/Empty results views.
 Search step deep linking.
 Deep linking for multiple product selections.
--Considerations:
-	-free API request capping 10/s
+	-Considerations:
+		-free API request capping 10/s
 Merge router more thorouhly and maintainably into the app.
+Annotated JS source.
 Extended product details content/designs
--Price/Store/Size/etc.
--Images slideshow
+	-Price/Store/Size/etc.
+	-Images slideshow
 Extended category filtering by subcategory
 Update to JS scrolling so all browsers receive a bar free UI like Chrome in OSX.
 Responsive design for mobile UI
