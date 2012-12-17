@@ -80,6 +80,8 @@
 <script>
 $(function() {
 	app.es = new app.view.EtsySearch();
+	app.esRouter = new app.router.EtsySearch();
+	Backbone.history.start();
 });
 </script>
 </body>

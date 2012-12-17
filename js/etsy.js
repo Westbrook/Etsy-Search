@@ -2,6 +2,7 @@ window.app = {
 	collection: {},
 	model: {},
 	view: {},
+	router: {},
 	api_key: 'CMCCX1OZDKGQ4M1LA2GLLSJL',
 	baseURL: 'http://openapi.etsy.com/v2/'
 };
@@ -16,7 +17,7 @@ Handlebars.registerHelper('pagination', function() {
 				pagination += '<a href="#" data-page="' + (this.page-1) + '" title="Previous Page"><</a>';	
 			}
 			if(i>0 && (this.count > (i - 1) * this.limit)){
-				pagination += '<a href="#" data-page="' + i + '" title="Page ' + i + '">' + i + '</a>';
+				pagination += '<a href="#" data-page="' + i + '" title="Page ' + i + '"' + ((this.page==i)?'class="current"':'') + '>' + i + '</a>';
 			}
 			if(i==this.page+2 && (this.count > this.page * this.limit)){
 				pagination += '<a href="#" data-page="' + (this.page+1) + '" title="Next Page">></a>';	
@@ -27,12 +28,22 @@ Handlebars.registerHelper('pagination', function() {
 	}
 	return new Handlebars.SafeString(pagination);
 });
+app.router.EtsySearch = Backbone.Router.extend({
+	routes: {
+		"product/:id": 'loadProduct'
+	},
+	loadProduct: function(id) {
+		var model = new app.model.Listing({id: id});
+		app.es.products.collection.add(model);
+		model.fetch({dataType: "jsonp", success: model.scope});
+	}
+});
 app.model.Listing = Backbone.Model.extend({
 	initialize: function() {
 		_.bindAll(this);
 	},
 	url: function() {
-		return 	app.baseURL + '/listings/'+this.id+'.js?api_key='+app.api_key;	
+		return 	app.baseURL + 'listings/'+this.id+'.js?api_key='+app.api_key+'&includes=Images';	
 	},
 	scope: function() {
 		var newAttrs = this.get('results')[0];
@@ -166,6 +177,7 @@ app.view.Result = Backbone.View.extend({
 	},
 	viewMore: function() {
 		this.model.trigger('viewProduct', this.model);
+		app.esRouter.navigate("product/" + this.model.get('listing_id'));
 	}
 });
 app.view.Results = Backbone.View.extend({
@@ -361,7 +373,7 @@ app.view.EtsySearch = Backbone.View.extend({
 		this.sorting = new app.view.Sorting();
 		this.sorting.collection.on('change', this.updateSorting);
 		this.listings.on('scoped', this.showOptions);
-		this.product = new app.view.Products();
+		this.products = new app.view.Products();
 	},
 	render: function() {
 		this.$el.html(this.template());
@@ -379,7 +391,7 @@ app.view.EtsySearch = Backbone.View.extend({
 		this.getResults();
 	},
 	viewProduct: function(model) {
-		this.product.collection.add(model);
+		this.products.collection.add(model);
 	},
 	updateSorting: function(sortType) {
 		var direction = sortType.get('direction'),

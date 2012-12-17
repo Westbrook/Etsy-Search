@@ -11,9 +11,7 @@
 	width: 100%;
 	height: 100%;
 	#search, #results {
-		position: absolute;
-		top: 0;
-		left: 0;
+		float: left;
 		width: 15%;
 		height: 100%;
 		background: #fff;
@@ -44,7 +42,6 @@
 	}
 	#results {
 		width: 25%;
-		left: 15%;
 		margin: 0;
 		padding: 20px 0;
 		.result {
@@ -84,6 +81,9 @@
 				line-height: 1;
 				float: left;
 			}
+			.current {
+				background: #666;
+			}
 			span {
 				float: left;
 				padding: 5px 0;
@@ -92,8 +92,7 @@
 		}
 	}
 	#products {
-		position: absolute;
-		right: 0;
+		float: left;
 		width: 60%;
 		height: 100%;
 		padding: 20px 0;
