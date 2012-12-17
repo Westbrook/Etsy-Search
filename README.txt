@@ -19,4 +19,5 @@ Extended product details content/designs
 Extended category filtering by subcategory
 Responsive design for mobile UI
 Investigate caching for offline viewing similar to http://labs.ft.com/2012/08/basic-offline-html5-web-app/
+JS and UI automated testing: (qUnit and Selenium?)
 
