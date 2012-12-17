@@ -43,7 +43,7 @@ app.model.Listing = Backbone.Model.extend({
 		_.bindAll(this);
 	},
 	url: function() {
-		return 	app.baseURL + 'listings/'+this.id+'.js?api_key='+app.api_key+'&includes=Images';	
+		return 	app.baseURL + 'listings/'+this.id+'.js?api_key='+app.api_key+'&fields=listing_id,title,price,url,description&includes=Images(url_75x75,url_570xN)';	
 	},
 	scope: function() {
 		var newAttrs = this.get('results')[0];
@@ -80,7 +80,8 @@ app.collection.Listings = app.collection.EtsySearch.extend({
 		url += this.limit;
 		url += '&keywords=';
 		url += this.searchTerm;
-		url += '&includes=Images&category=';
+		url += '&fields=listing_id,title,price,url,description';
+		url += '&includes=Images(url_75x75,url_570xN)&category=';
 		url += this.categories.join(' ');
 		url += ((this.color!='')?'&color='+this.color+'&color_accuracy=30':'');
 		url += ((this.priceMin!=-1)?'&min_price='+this.priceMin:'');
