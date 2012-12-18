@@ -62,10 +62,11 @@
 			position: absolute;
 			top: 0;
 			right: 20px;
+			padding-bottom: 3px;
 		}
 		.price {
 			position: absolute;
-			top: 20px;
+			top: 25px;
 			right: 20px;
 		}
 		.controls {
@@ -75,13 +76,7 @@
 				padding: 0 20px 10px;
 			}
 			a {
-				color: #fff;
-				background: #999;
-				text-decoration: none;
-				margin: 0 0 0 5px;
-				padding: 5px;
-				line-height: 1;
-				float: left;
+				@extend button;
 			}
 			.current {
 				background: #666;
@@ -100,15 +95,25 @@
 		padding: 20px 0;
 		.close {
 			float: right;
-			margin: 15px 15px 0 0;
+			width: 22px;
+			text-align: center;
 		}
 		.product {
-			padding: 0 20px 10px;
-			margin: 0 0 10px;
+			float: left;
+			width: 100%;
+			padding: 0 20px 20px;
+			margin: 0 0 20px;
 			border-bottom: 1px solid #999;
 			.link {
 				text-align: right;
 			}
+		}
+		img {
+			float: right;
+		}
+		p {
+			margin: 0 585px 0 0;
+			padding: 0 0 15px;
 		}
 	}
 	#filters, #sorting {
@@ -150,7 +155,8 @@
 			cursor: pointer;
 			margin: 0;
 			line-height: 1.5;
-			padding-top: 2px;
+			padding: 2px 0 0;
+			color: #222;
 			span {
 				display: none;
 			}	
@@ -158,6 +164,7 @@
 		.selected {
 			background: #cecece;
 			span {
+				margin: 0 8px 0 0;
 				display: block;
 				color: #fff;
 				float: right;
