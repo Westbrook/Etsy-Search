@@ -656,6 +656,7 @@ h3 {
 
 /* line 27, scss/modules/_typography.scss */
 button, #app #results .controls a {
+  -webkit-appearance: none;
   border: none;
   color: #fff;
   background: #999;
