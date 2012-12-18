@@ -15,6 +15,7 @@ Search step deep linking.
 Deep linking for multiple product selections.
 	-Considerations:
 		-free API request capping 10/s
+		-does that mean paginating the selected list?
 Merge router more thorouhly and maintainably into the app.
 Annotated JS source.
 Extended product details content/designs
