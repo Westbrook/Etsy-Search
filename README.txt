@@ -20,9 +20,12 @@ Annotated JS source.
 Extended product details content/designs
 	-Price/Store/Size/etc.
 	-Images slideshow
+	-wider view when results hidden?
 Extended category filtering by subcategory
 Update to JS scrolling so all browsers receive a bar free UI like Chrome in OSX.
 Responsive design for mobile UI
+	-Collapse the experience for smaller delivery contexts
+	-Fork between 1/2 column product UI
 Investigate caching for offline viewing similar to http://labs.ft.com/2012/08/basic-offline-html5-web-app/
 JS and UI automated testing: (qUnit and Selenium?)
 
