@@ -196,7 +196,7 @@ app.view.Results = Backbone.View.extend({
 		this.updateControls();
 		this.assign(this.controls, '.controls');
 		if(this.collection.length>0) {
-			this.$el.show();
+			this.trigger('hasResults');
 		}
 	},
 	updateControls: function() {
@@ -366,6 +366,7 @@ app.view.EtsySearch = Backbone.View.extend({
 			collection: this.listings
 		});
 		this.results.on('viewProduct', this.viewProduct);
+		this.results.on('hasResults', this.showResults);
 		this.results.controls.on('goToPage', this.goToPage);
 		this.filters = new app.view.Filters();
 		this.filters.categories.collection.on('change', this.updateCategories);
@@ -381,6 +382,9 @@ app.view.EtsySearch = Backbone.View.extend({
 	},
 	getResults: function() {
 		this.listings.fetch({dataType: "jsonp", success: this.listings.scope});
+	},
+	showResults: function() {
+		this.$el.removeClass('no-results');
 	},
 	showOptions: function() {
 		this.sorting.$el.show();

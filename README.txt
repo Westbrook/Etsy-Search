@@ -21,7 +21,6 @@ Annotated JS source.
 Extended product details content/designs
 	-Price/Store/Size/etc.
 	-Images slideshow
-	-wider view when results hidden?
 Extended category filtering by subcategory
 Update to JS scrolling so all browsers receive a bar free UI like Chrome in OSX.
 Responsive design for mobile UI

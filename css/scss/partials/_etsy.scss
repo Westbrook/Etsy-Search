@@ -41,6 +41,11 @@
 			float: right;
 		}
 	}
+	&.no-results {
+		#results {
+			display: none;
+		}
+	}
 	#results {
 		z-index: 1;
 		width: 25%;
@@ -86,6 +91,11 @@
 				padding: 5px 0;
 				margin: 0 0 0 5px;
 			}
+		}
+	}
+	&.no-results {
+		#products {
+			width: 85%;
 		}
 	}
 	#products {

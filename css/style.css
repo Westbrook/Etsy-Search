@@ -722,14 +722,18 @@ button, #app #results .controls a {
   margin: 5px 0 0;
   float: right;
 }
-/* line 44, scss/partials/_etsy.scss */
+/* line 45, scss/partials/_etsy.scss */
+#app.no-results #results {
+  display: none;
+}
+/* line 49, scss/partials/_etsy.scss */
 #app #results {
   z-index: 1;
   width: 25%;
   margin: 0;
   padding: 20px 0;
 }
-/* line 49, scss/partials/_etsy.scss */
+/* line 54, scss/partials/_etsy.scss */
 #app #results .result {
   float: left;
   position: relative;
@@ -738,57 +742,61 @@ button, #app #results .controls a {
   margin: 0 0 10px;
   border-bottom: 1px solid #999;
 }
-/* line 57, scss/partials/_etsy.scss */
+/* line 62, scss/partials/_etsy.scss */
 #app #results img {
   float: left;
   margin: 0 10px 0 0;
 }
-/* line 61, scss/partials/_etsy.scss */
+/* line 66, scss/partials/_etsy.scss */
 #app #results .more {
   position: absolute;
   top: 0;
   right: 20px;
   padding-bottom: 3px;
 }
-/* line 67, scss/partials/_etsy.scss */
+/* line 72, scss/partials/_etsy.scss */
 #app #results .price {
   position: absolute;
   top: 25px;
   right: 20px;
 }
-/* line 72, scss/partials/_etsy.scss */
+/* line 77, scss/partials/_etsy.scss */
 #app #results .controls {
   float: right;
   padding: 10px 20px 0;
 }
-/* line 75, scss/partials/_etsy.scss */
+/* line 80, scss/partials/_etsy.scss */
 #app #results .controls:first-child {
   padding: 0 20px 10px;
 }
-/* line 81, scss/partials/_etsy.scss */
+/* line 86, scss/partials/_etsy.scss */
 #app #results .controls .current {
   background: #666;
 }
-/* line 84, scss/partials/_etsy.scss */
+/* line 89, scss/partials/_etsy.scss */
 #app #results .controls span {
   float: left;
   padding: 5px 0;
   margin: 0 0 0 5px;
 }
-/* line 91, scss/partials/_etsy.scss */
+/* line 97, scss/partials/_etsy.scss */
+#app.no-results #products {
+  width: 85%;
+}
+/* line 101, scss/partials/_etsy.scss */
 #app #products {
   float: left;
   width: 60%;
   height: 100%;
   padding: 20px 0;
 }
-/* line 96, scss/partials/_etsy.scss */
+/* line 106, scss/partials/_etsy.scss */
 #app #products .close {
   float: right;
   width: 22px;
   text-align: center;
 }
-/* line 101, scss/partials/_etsy.scss */
+/* line 111, scss/partials/_etsy.scss */
 #app #products .product {
   float: left;
   width: 100%;
@@ -796,36 +804,36 @@ button, #app #results .controls a {
   margin: 0 0 20px;
   border-bottom: 1px solid #999;
 }
-/* line 107, scss/partials/_etsy.scss */
+/* line 117, scss/partials/_etsy.scss */
 #app #products .product .link {
   text-align: right;
 }
-/* line 111, scss/partials/_etsy.scss */
+/* line 121, scss/partials/_etsy.scss */
 #app #products img {
   float: right;
 }
-/* line 114, scss/partials/_etsy.scss */
+/* line 124, scss/partials/_etsy.scss */
 #app #products p {
   margin: 0 585px 0 0;
   padding: 0 0 15px;
 }
-/* line 119, scss/partials/_etsy.scss */
+/* line 129, scss/partials/_etsy.scss */
 #app #filters, #app #sorting {
   float: left;
   width: 100%;
 }
-/* line 122, scss/partials/_etsy.scss */
+/* line 132, scss/partials/_etsy.scss */
 #app #filters #categories, #app #filters #colors, #app #filters #prices, #app #sorting #categories, #app #sorting #colors, #app #sorting #prices {
   width: 100%;
   float: left;
   padding: 5px 0;
 }
-/* line 127, scss/partials/_etsy.scss */
+/* line 137, scss/partials/_etsy.scss */
 #app #filters .open-close, #app #sorting .open-close {
   cursor: pointer;
   position: relative;
 }
-/* line 130, scss/partials/_etsy.scss */
+/* line 140, scss/partials/_etsy.scss */
 #app #filters .open-close span, #app #sorting .open-close span {
   position: absolute;
   right: 10px;
@@ -835,13 +843,13 @@ button, #app #results .controls a {
   border-left: 0;
   border-right: 6px solid black;
 }
-/* line 143, scss/partials/_etsy.scss */
+/* line 153, scss/partials/_etsy.scss */
 #app #filters .filter, #app #filters .sort, #app #sorting .filter, #app #sorting .sort {
   display: none;
   float: left;
   width: 100%;
 }
-/* line 148, scss/partials/_etsy.scss */
+/* line 158, scss/partials/_etsy.scss */
 #app #filters button, #app #filters #results .controls a, #app #results .controls #filters a, #app #sorting button, #app #sorting #results .controls a, #app #results .controls #sorting a {
   float: left;
   width: 100%;
@@ -855,38 +863,38 @@ button, #app #results .controls a {
   padding: 2px 0 0;
   color: #222;
 }
-/* line 160, scss/partials/_etsy.scss */
+/* line 170, scss/partials/_etsy.scss */
 #app #filters button span, #app #filters #results .controls a span, #app #results .controls #filters a span, #app #sorting button span, #app #sorting #results .controls a span, #app #results .controls #sorting a span {
   display: none;
 }
-/* line 164, scss/partials/_etsy.scss */
+/* line 174, scss/partials/_etsy.scss */
 #app #filters .selected, #app #sorting .selected {
   background: #cecece;
 }
-/* line 166, scss/partials/_etsy.scss */
+/* line 176, scss/partials/_etsy.scss */
 #app #filters .selected span, #app #sorting .selected span {
   margin: 0 8px 0 0;
   display: block;
   color: #fff;
   float: right;
 }
-/* line 174, scss/partials/_etsy.scss */
+/* line 184, scss/partials/_etsy.scss */
 #app #sorting {
   padding: 0 0 15px;
 }
-/* line 176, scss/partials/_etsy.scss */
+/* line 186, scss/partials/_etsy.scss */
 #app #sorting h2 {
   padding: 0;
 }
-/* line 179, scss/partials/_etsy.scss */
+/* line 189, scss/partials/_etsy.scss */
 #app #sorting .sort {
   display: block;
 }
-/* line 182, scss/partials/_etsy.scss */
+/* line 192, scss/partials/_etsy.scss */
 #app #sorting .sortBy {
   position: relative;
 }
-/* line 185, scss/partials/_etsy.scss */
+/* line 195, scss/partials/_etsy.scss */
 #app #sorting button span, #app #sorting #results .controls a span, #app #results .controls #sorting a span {
   position: absolute;
   right: 10px;
