@@ -11,16 +11,18 @@ Handlebars 1.0.rc.1
 
 TODOs:
 Loading/Empty results views.
-Search step deep linking.
-Deep linking for multiple product selections.
-	-Considerations:
-		-free API request capping 10/s
-		-does that mean paginating the selected list?
+Bookmarking:
+	-Search Results
+	-Multiple products
+		-Considerations:
+			-free API request capping 10/s
+			-does that mean paginating the selected list?
 Merge router more thorouhly and maintainably into the app.
 Annotated JS source.
 Extended product details content/designs
 	-Price/Store/Size/etc.
 	-Images slideshow
+	-Make product specifics available for repopulating search
 Extended category filtering by subcategory
 Update to JS scrolling so all browsers receive a bar free UI like Chrome in OSX.
 Responsive design for mobile UI
