@@ -23,6 +23,7 @@ Extended product details content/designs
 	-Price/Store/Size/etc.
 	-Images slideshow
 	-Make product specifics available for repopulating search
+Sorting for selected products list.
 Extended category filtering by subcategory
 Update to JS scrolling so all browsers receive a bar free UI like Chrome in OSX.
 Responsive design for mobile UI
