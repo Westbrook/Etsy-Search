@@ -65,8 +65,12 @@ app.collection.EtsySearch = Backbone.Collection.extend({
 		_.bindAll(this);
 	},
 	scope: function() {
-		this.count = this.at(0).get('count');
-		this.reset(this.at(0).get('results'), {silent: true});
+		var response = this.at(0),
+			count = response.get('count');
+		//API will return 50100 results count when the results are above 50000.
+		//API does not support an offset greater than 50000, so let's ignore any results after that.
+		this.count = ((count<=50000)?count:50000);
+		this.reset(response.get('results'), {silent: true});
 		this.trigger('scoped');
 	}
 });
@@ -76,7 +80,7 @@ app.collection.Listings = app.collection.EtsySearch.extend({
 		var url = app.baseURL;
 		url += 'listings/active.js?api_key=';
 		url += app.api_key;
-		url += '&min_price=500&limit=';
+		url += '&limit=';
 		url += this.limit;
 		url += '&keywords=';
 		url += this.searchTerm;
@@ -159,7 +163,6 @@ app.view.Controls = Backbone.View.extend({
 	},
 	goToPage: function(e) {
 		e.preventDefault();
-		console.log($(e.currentTarget).data('page'));
 		this.trigger('goToPage', ($(e.currentTarget).data('page')-1) * 10);
 	}
 });
@@ -431,7 +434,7 @@ app.view.EtsySearch = Backbone.View.extend({
 	},
 	updateCategories: function() {
 		var categories = [];
-		this.categories.collection.each(function(category){
+		this.filters.categories.collection.each(function(category){
 			if(category.get('selected')) {
 				categories.push(category.get('category_name'));
 			}
