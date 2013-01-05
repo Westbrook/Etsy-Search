@@ -139,13 +139,18 @@ app.view.Products = Backbone.View.extend({
 		this.collection.on('add remove', this.render);
 		this.products = {};
 	},
-	render: function() {
+	render: function(model) {
 		this.$el.empty();
     	this.collection.each(this.addProduct);
+		this.scrollFocus(model);
 	},
 	addProduct: function(product) {
 		this.products[product.get('listing_id')] = new app.view.Product({model: product});
     	this.$el.append(this.products[product.get('listing_id')].render().el);
+	},
+	scrollFocus: function(product) {
+		var scrollTop = this.products[product.get('listing_id')].$el.offset().top;
+		this.$el.scrollTop(scrollTop-20);
 	}
 });
 app.view.Controls = Backbone.View.extend({
