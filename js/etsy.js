@@ -210,12 +210,8 @@ app.view.Results = Backbone.View.extend({
 		});
 	},
 	addResult: function(result) {
-		result.on('viewProduct', this.viewProduct);
 		this.results[result.get('listing_id')] = new app.view.Result({model: result});
     	this.$el.find('.results').append(this.results[result.get('listing_id')].render().el);
-	},
-	viewProduct: function(model) {
-		this.trigger('viewProduct', model);
 	},
 	assign : function (view, selector) {
 		view.setElement(this.$(selector)).render();
@@ -368,7 +364,7 @@ app.view.EtsySearch = Backbone.View.extend({
 		this.results = new app.view.Results({
 			collection: this.listings
 		});
-		this.results.on('viewProduct', this.viewProduct);
+		this.results.collection.on('viewProduct', this.viewProduct);
 		this.results.on('hasResults', this.showResults);
 		this.results.controls.on('goToPage', this.goToPage);
 		this.filters = new app.view.Filters();
