@@ -125,7 +125,7 @@ app.view.Product = Backbone.View.extend({
 		return this;
 	},
 	close: function() {
-		this.model.destroy();	
+		this.remove();	
 	}
 });
 app.view.Products = Backbone.View.extend({
@@ -206,6 +206,8 @@ app.view.Results = Backbone.View.extend({
 		if(this.collection.length>0) {
 			this.trigger('hasResults');
 		}
+		//Scroll to top for every results/page udpate
+		this.$el.scrollTop(0);
 	},
 	updateControls: function() {
 		this.controls.model.set({
@@ -400,7 +402,10 @@ app.view.EtsySearch = Backbone.View.extend({
 		this.getResults();
 	},
 	viewProduct: function(model) {
-		this.products.collection.add(model);
+		//Make sure this model wasn't added from the single product feed.
+		if(this.products.collection.where({id: model.get('listing_id')}).length==0) {
+			this.products.collection.add(model);
+		}
 	},
 	updateSorting: function(sortType) {
 		var direction = sortType.get('direction'),
