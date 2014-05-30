@@ -1,1 +1,1 @@
-eval("alert('hi')");
+alert('hi');
